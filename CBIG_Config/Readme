@@ -1,2 +1,3 @@
 In this folder you can find the configuration files that were used to do the preprocessing steps using the CBIG pipeline. There is a file for each data collection site.
 The main difference between each site is just the slice time correction step, as each data collection site used a different slice timing
+The CBIG preprocessing pipeline can be found at the following link: https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/preprocessing/CBIG_fMRI_Preproc2016
