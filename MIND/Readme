@@ -1,0 +1,2 @@
+This file only contains the script that was used to run the main get_vertex function that calculates the MIND measure for each participant.
+The actual code for the mind measure calculation can be found at: https://github.com/isebenius/MIND
