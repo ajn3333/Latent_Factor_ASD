@@ -21,7 +21,7 @@ var=$(printf "%sq;d" $SLURM_ARRAY_TASK_ID)
 subjid=$(sed $var $HOME/ABIDE2/y_values.txt)
 
 source /fs/dss/home/ripo3384/MIND.out/venv/bin/activate
-python /fs/dss/home/ripo3384/Modules/MIND/HCP_run.py "/fs/dss/home/ripo3384/ABIDE2-output/" "$subjid" "Schaefer2018_400Parcels_7Networks" "/fs/dss/home/ripo3384/MIND_results/"
+python /fs/dss/home/ripo3384/Modules/MIND/HPC_run.py "/fs/dss/home/ripo3384/ABIDE2-output/" "$subjid" "Schaefer2018_400Parcels_7Networks" "/fs/dss/home/ripo3384/MIND_results/"
 deactivate
 
 
