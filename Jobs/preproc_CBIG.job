@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#SBATCH --job-name=CBIG_preproc
+#SBATCH -p rosa.p
+#SBATCH --array=1-488:1%10
+#SBATCH -c 10
+#SBATCH --mem=16G
+#SBATCH --time=72:0:0
+#SBATCH --output=preproc_%a.out
+#SBATCH --error=preproc_%a.out
+#SBATCH --mail-user=anas.al-naji@uni-oldenburg.de
+#SBATCH --mail-type=END,FAIL
+
+
+
+
+module load hpc-env
+module load GCC
+
+source /fs/dss/home/ripo3384/Standalone_CBIG_fMRI_Preproc2016/stable_projects/preprocessing/CBIG_fMRI_Preproc2016/config/CBIG_preproc_tested_config.sh
+
+var=$(printf "%sq;d" $SLURM_ARRAY_TASK_ID)
+subjid=$(sed $var $WORK/ABIDE2/y_values.txt)
+subject_group=$(sed $var $WORK/ABIDE2/x_values.txt)
+
+/fs/dss/home/ripo3384/Standalone_CBIG_fMRI_Preproc2016/stable_projects/preprocessing/CBIG_fMRI_Preproc2016/CBIG_preproc_fMRI_preprocess.csh -s ${subjid}_preproc -output_d $WORK/freesurfer_output -anat_s ${subjid} -anat_d $WORK/ABIDE2-output -fmrinii $WORK/ABIDE2/ABIDE2/${subjid}/func/mprage.nii.gz -config /fs/dss/home/ripo3384/Standalone_CBIG_fMRI_Preproc2016/stable_projects/preprocessing/CBIG_fMRI_Preproc2016/${subject_group}_config.txt
+
+

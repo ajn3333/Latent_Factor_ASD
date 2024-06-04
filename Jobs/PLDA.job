@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#SBATCH --job-name=PLDA
+#SBATCH -p rosa.p
+#SBATCH --nodes=1
+#SBATCH -c 25
+#SBATCH --mem=32G
+#SBATCH --time=96:0:0
+#SBATCH --output=PLDA.out
+#SBATCH --error=PLDA.out
+#SBATCH --mail-user=anas.al-naji@uni-oldenburg.de
+#SBATCH --mail-type=END,FAIL
+
+
+
+
+module load hpc-env/13.1
+module load Python
+
+source /fs/dss/home/ripo3384/MIND.out/venv/bin/activate
+python "/fs/dss/work/ripo3384/MIND_CORR/polar_LDA.py"
+deactivate
+
+

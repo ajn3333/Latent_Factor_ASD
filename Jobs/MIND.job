@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#SBATCH --job-name=MIND_analysis
+#SBATCH -p rosa.p
+#SBATCH --array=1-488:1%10
+#SBATCH -c 10
+#SBATCH --mem=16G
+#SBATCH --time=72:0:0
+#SBATCH --output=Mind_%a.out
+#SBATCH --error=Mind_%a.out
+#SBATCH --mail-user=anas.al-naji@uni-oldenburg.de
+#SBATCH --mail-type=END,FAIL
+
+
+
+
+module load hpc-env/13.1
+module load Python
+
+var=$(printf "%sq;d" $SLURM_ARRAY_TASK_ID)
+subjid=$(sed $var $HOME/ABIDE2/y_values.txt)
+
+source /fs/dss/home/ripo3384/MIND.out/venv/bin/activate
+python /fs/dss/home/ripo3384/Modules/MIND/HCP_run.py "/fs/dss/home/ripo3384/ABIDE2-output/" "$subjid" "Schaefer2018_400Parcels_7Networks" "/fs/dss/home/ripo3384/MIND_results/"
+deactivate
+
+

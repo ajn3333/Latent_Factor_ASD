@@ -1,0 +1,49 @@
+#!/bin/bash
+
+#SBATCH --job-name=CBIG_parc
+#SBATCH -p rosa.p
+#SBATCH --nodes=1
+#SBATCH --mem=16G
+#SBATCH --time=72:0:0
+#SBATCH --output=parcelation.out
+#SBATCH --error=parcelation.out
+#SBATCH --mail-user=anas.al-naji@uni-oldenburg.de
+#SBATCH --mail-type=END,FAIL
+
+
+
+
+module load hpc-env/13.1
+module load GCC
+module load FreeSurfer/7.4.1-centos8_x86_64
+module load FSL
+
+SUBJECTS_DIR="/fs/dss/home/ripo3384/ABIDE2-output/"
+
+# Read subjects from the text file into an array
+subjects=()
+while IFS= read -r subject_name; do
+    subjects+=("$subject_name")
+done < "/fs/dss/home/ripo3384/ABIDE2/y_values.txt"
+
+# Loop through each subject
+for subject_name in "${subjects[@]}"; do
+    echo "Processing subject: $subject_name"
+    
+    # Run mris_ca_label for the current subject
+    mris_ca_label -l "$SUBJECTS_DIR/$subject_name/label/lh.cortex.label" \
+        "$subject_name" lh "$SUBJECTS_DIR/$subject_name/surf/lh.sphere.reg" \
+        "/fs/dss/home/ripo3384/Modules/gcs/lh.Schaefer2018_400Parcels_7Networks.gcs" \
+        "$SUBJECTS_DIR/$subject_name/label/lh.Schaefer2018_400Parcels_7Networks_order.annot"
+    mris_ca_label -l "$SUBJECTS_DIR/$subject_name/label/rh.cortex.label" \
+        "$subject_name" rh "$SUBJECTS_DIR/$subject_name/surf/rh.sphere.reg" \
+        "/fs/dss/home/ripo3384/Modules/gcs/rh.Schaefer2018_400Parcels_7Networks.gcs" \
+        "$SUBJECTS_DIR/$subject_name/label/rh.Schaefer2018_400Parcels_7Networks_order.annot"
+    # Run mris_anatomical_stats for current subject
+    mris_anatomical_stats -f "$SUBJECTS_DIR/$subject_name/stats/lh.Schaefer2018_400Parcels_7Networks.stats" \
+    -b -a "$SUBJECTS_DIR/$subject_name/label/lh.Schaefer2018_400Parcels_7Networks_order.annot" "$subject_name" lh
+    mris_anatomical_stats -f "$SUBJECTS_DIR/$subject_name/stats/rh.Schaefer2018_400Parcels_7Networks.stats" \
+    -b -a "$SUBJECTS_DIR/$subject_name/label/rh.Schaefer2018_400Parcels_7Networks_order.annot" "$subject_name" rh
+    
+    echo "Finished processing subject: $subject_name"
+done

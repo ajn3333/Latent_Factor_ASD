@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#SBATCH --job-name=reconAllABIDEII
+#SBATCH -p rosa.p
+#SBATCH --array=1-76:1%10
+#SBATCH -c 10
+#SBATCH --mem=10G
+#SBATCH --time=72:0:0
+#SBATCH --output=freesurfer_%a.out
+#SBATCH --error=freesurfer_%a.out
+#SBATCH --mail-user=anas.al-naji@uni-oldenburg.de
+#SBATCH --mail-type=END,FAIL
+
+
+
+
+module load hpc-env
+module load FreeSurfer
+
+var=$(printf "%sq;d" $SLURM_ARRAY_TASK_ID)
+subjid=$(sed $var /fs/dss/home/ripo3384/ABIDE2/y_values.txt)
+
+recon-all -all -s $subjid -i /fs/dss/home/ripo3384/ABIDE2/ABIDE2/$subjid/anat/mprage.nii.gz -sd /fs/dss/home/ripo3384/ABIDE2-output/ -threads 10
