@@ -6,6 +6,21 @@ Each job file corresponds to a major processing or analysis step, from preproces
 
 ---
 
+## External Dependencies
+
+Several external repositories are required to run the full pipeline:
+
+### CBIG (Preprocessing)
+- The preprocessing pipeline relies on the **CBIG repository** for fMRI preprocessing.
+- Appropriate CBIG dependencies must be installed and configured.
+- The CBIG codebase can be found on the **Thomas Yeo Lab GitHub page**.
+
+### MIND (Similarity Matrices)
+- Generation of **MIND similarity matrices** requires the **MIND repository**.
+- This repository is maintained on the **isebenius GitHub page**.
+
+---
+
 ## Contents
 
 ### `preproc_CBIG.job`
@@ -42,6 +57,7 @@ This job script is used to **parcellate structural MRI data**.
 - Parcellated structural representations for downstream analyses.
 
 ---
+
 
 ### `MIND.job`
 This job script computes **MIND similarity matrices**.
