@@ -20,7 +20,10 @@ module load GCC
 source /fs/dss/home/ripo3384/Standalone_CBIG_fMRI_Preproc2016/stable_projects/preprocessing/CBIG_fMRI_Preproc2016/config/CBIG_preproc_tested_config.sh
 
 var=$(printf "%sq;d" $SLURM_ARRAY_TASK_ID)
+# y_values.txt is a list of the file names of the participants with each line in the txt file containing one file name
 subjid=$(sed $var $WORK/ABIDE2/y_values.txt)
+# x_values.txt is a list of the site of data collection. This code here is used to define the configuration file of the CBIG preprocessing pipeline.
+# The configuration file is different for each collection site because they used a different slice timing during the collection and this needs to be specified
 subject_group=$(sed $var $WORK/ABIDE2/x_values.txt)
 
 /fs/dss/home/ripo3384/Standalone_CBIG_fMRI_Preproc2016/stable_projects/preprocessing/CBIG_fMRI_Preproc2016/CBIG_preproc_fMRI_preprocess.csh -s ${subjid}_preproc -output_d $WORK/freesurfer_output -anat_s ${subjid} -anat_d $WORK/ABIDE2-output -fmrinii $WORK/ABIDE2/ABIDE2/${subjid}/func/mprage.nii.gz -config /fs/dss/home/ripo3384/Standalone_CBIG_fMRI_Preproc2016/stable_projects/preprocessing/CBIG_fMRI_Preproc2016/${subject_group}_config.txt
