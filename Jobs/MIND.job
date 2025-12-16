@@ -18,6 +18,7 @@ module load hpc-env/13.1
 module load Python
 
 var=$(printf "%sq;d" $SLURM_ARRAY_TASK_ID)
+# y_values.txt is a list of the file names of the participants with each line in the txt file containing one file name
 subjid=$(sed $var $HOME/ABIDE2/y_values.txt)
 
 source /fs/dss/home/ripo3384/MIND.out/venv/bin/activate
