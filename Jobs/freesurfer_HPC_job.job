@@ -18,6 +18,7 @@ module load hpc-env
 module load FreeSurfer
 
 var=$(printf "%sq;d" $SLURM_ARRAY_TASK_ID)
+# y_values.txt is a list of the file names of the participants with each line in the txt file containing one file name
 subjid=$(sed $var /fs/dss/home/ripo3384/ABIDE2/y_values.txt)
 
 recon-all -all -s $subjid -i /fs/dss/home/ripo3384/ABIDE2/ABIDE2/$subjid/anat/mprage.nii.gz -sd /fs/dss/home/ripo3384/ABIDE2-output/ -threads 10
