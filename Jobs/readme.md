@@ -12,7 +12,7 @@ Each job file corresponds to a major processing or analysis step, from preproces
 This is the **main preprocessing job script**.
 
 **Purpose**
-- Runs the preprocessing pipeline on raw neuroimaging data.
+- Runs the preprocessing pipeline on raw MRI data.
 
 **Required inputs**
 - `y_values.txt`  
