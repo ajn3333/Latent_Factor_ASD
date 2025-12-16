@@ -25,7 +25,7 @@ subjects=()
 while IFS= read -r subject_name; do
     subjects+=("$subject_name")
 done < "/fs/dss/home/ripo3384/ABIDE2/y_values.txt"
-
+# y_values.txt is a list of the file names of the participants with each line in the txt file containing one file name
 # Loop through each subject
 for subject_name in "${subjects[@]}"; do
     echo "Processing subject: $subject_name"
