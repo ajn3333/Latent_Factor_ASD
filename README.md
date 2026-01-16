@@ -32,7 +32,7 @@ Several external repositories are required to run the full pipeline:
 
 The repository is organized as follows:
 
-### `/Jobs`
+### (/Jobs)[/Jobs]
 - Main entry directory for the pipeline.
 - Contains **SLURM job scripts** used to run preprocessing and all major analysis steps on the HPC cluster.
 
